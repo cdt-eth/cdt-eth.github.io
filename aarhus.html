@@ -80,6 +80,7 @@
       background: rgba(0, 0, 0, 0.9);
       max-width: 90vw;
       max-height: 90vh;
+      position: relative;
     }
     
     dialog::backdrop {
@@ -112,8 +113,18 @@
       outline: none;
     }
     
+    @media (max-width: 768px) {
+      .modal-close {
+        display: none;
+      }
+      
+      .modal-nav {
+        display: none;
+      }
+    }
+    
     .modal-nav {
-      position: absolute;
+      position: fixed;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(0, 0, 0, 0.7);
@@ -124,7 +135,7 @@
       height: 50px;
       font-size: 24px;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 1001;
       outline: none;
       display: flex;
       align-items: center;
@@ -272,6 +283,8 @@
     // Global variables for carousel
     let allImages = [];
     let currentImageIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
     
     // Function to create an image element
     function createImageElement(filename) {
@@ -343,6 +356,31 @@
         nextImage();
       }
     });
+    
+    // Touch gesture support for modal
+    document.getElementById('imageModal').addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    document.getElementById('imageModal').addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+    
+    function handleSwipe() {
+      const swipeThreshold = 50; // Minimum distance for a swipe
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swiped left - next image
+          nextImage();
+        } else {
+          // Swiped right - previous image
+          previousImage();
+        }
+      }
+    }
     
     // Function to populate a section with images
     function populateSection(sectionId, imageFiles) {
