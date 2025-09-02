@@ -139,6 +139,11 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
+
+    .modal-nav[disabled] {
+      opacity: 0.35;
+      cursor: default;
+    }
     
     .modal-nav:hover,
     .modal-nav:focus {
@@ -335,10 +340,11 @@
       document.body.style.top = `-${scrollY}px`;
       document.body.style.left = '0';
       document.body.style.right = '0';
-      document.body.style.width = '100%';
       document.body.classList.add('modal-open');
 
       modal.showModal();
+
+      updateNavButtons();
     }
     
     function closeModal() {
@@ -351,7 +357,6 @@
       document.body.style.top = '';
       document.body.style.left = '';
       document.body.style.right = '';
-      document.body.style.width = '';
       delete document.body.dataset.scrollY;
       window.scrollTo(0, scrollY);
     }
@@ -363,6 +368,7 @@
         const filename = allImages[currentImageIndex];
         modalImg.src = `${baseUrl}/${filename}`;
         modalImg.alt = filename.replace(/\.[^/.]+$/, '');
+        updateNavButtons();
       }
     }
     
@@ -373,6 +379,23 @@
         const filename = allImages[currentImageIndex];
         modalImg.src = `${baseUrl}/${filename}`;
         modalImg.alt = filename.replace(/\.[^/.]+$/, '');
+        updateNavButtons();
+      }
+    }
+
+    function updateNavButtons() {
+      const prevBtn = document.querySelector('.modal-prev');
+      const nextBtn = document.querySelector('.modal-next');
+      if (!prevBtn || !nextBtn) return;
+      if (currentImageIndex <= 0) {
+        prevBtn.setAttribute('disabled', 'true');
+      } else {
+        prevBtn.removeAttribute('disabled');
+      }
+      if (currentImageIndex >= allImages.length - 1) {
+        nextBtn.setAttribute('disabled', 'true');
+      } else {
+        nextBtn.removeAttribute('disabled');
       }
     }
     
