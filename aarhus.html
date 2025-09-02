@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+  content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 
 <html>
 <head>
@@ -131,6 +133,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 120ms ease, background 150ms ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     
     .modal-nav:hover,
@@ -139,7 +144,8 @@
     }
     
     .modal-nav:active {
-      transform: translateY(-50%) scale(0.95);
+      /* Keep position stable on desktop/tablet; no scale/bounce */
+      transform: translateY(-50%);
     }
     
     .modal-prev {
@@ -168,6 +174,11 @@
         font-size: 20px;
         background: rgba(0, 0, 0, 0.85);
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      }
+      
+      /* Prevent any movement on press for mobile */
+      .modal-nav:active {
+        transform: none;
       }
       
       .modal-prev {
