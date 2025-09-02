@@ -3,7 +3,7 @@
 
 <html>
 <head>
-  <title>Aarhus - Christian's Site</title>
+  <title>Aarhus</title>
   <style>    
     h1 {
       font-size: 3.5em;
@@ -17,7 +17,7 @@
       color: #666;
       margin-bottom: 2em;
     }
-
+ 
     h2 {
       font-size: 2em;
       margin-bottom: 0.1em;
@@ -31,7 +31,7 @@
       height: 250px;
       border-radius: 4px;
     }
-
+ 
     
     .image-grid {
       display: grid;
@@ -113,16 +113,7 @@
       outline: none;
     }
     
-    @media (max-width: 768px) {
-      .modal-close {
-        display: none;
-      }
-      
-      .modal-nav {
-        display: none;
-      }
-    }
-    
+    /* Desktop/tablet nav buttons */
     .modal-nav {
       position: fixed;
       top: 50%;
@@ -158,20 +149,33 @@
     .modal-next {
       right: 20px;
     }
-    
+
+    /* Mobile-specific adjustments */
     @media (max-width: 768px) {
+      .modal-close {
+        display: none;
+      }
+
+      /* Wide, bottom-fixed pill buttons for thumbs */
       .modal-nav {
-        width: 40px;
-        height: 40px;
+        position: fixed;
+        top: auto;
+        bottom: 16px;
+        transform: none;
+        width: 130px;
+        height: 48px;
+        border-radius: 999px;
         font-size: 20px;
+        background: rgba(0, 0, 0, 0.85);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       }
       
       .modal-prev {
-        left: 10px;
+        left: 12px;
       }
       
       .modal-next {
-        right: 10px;
+        right: 12px;
       }
     }
   
@@ -311,12 +315,32 @@
       currentImageIndex = imageIndex;
       modalImg.src = imageSrc;
       modalImg.alt = imageAlt;
+      // Lock body scroll
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      document.body.dataset.scrollY = String(scrollY);
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.classList.add('modal-open');
+
       modal.showModal();
     }
     
     function closeModal() {
       const modal = document.getElementById('imageModal');
       modal.close();
+      // Restore body scroll
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
+      document.body.classList.remove('modal-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      delete document.body.dataset.scrollY;
+      window.scrollTo(0, scrollY);
     }
     
     function previousImage() {
@@ -341,10 +365,15 @@
     
     // Close modal when clicking outside the image
     document.getElementById('imageModal').addEventListener('click', (e) => {
+      // Only close if clicking the backdrop of the dialog itself
       if (e.target === e.currentTarget) {
         closeModal();
       }
     });
+
+    // Note: We intentionally do not capture-click at document level to avoid
+    // blocking button target handlers (close/prev/next). Backdrop-only close
+    // is handled by the dialog click listener above.
     
     // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
@@ -394,10 +423,6 @@
       });
     }
     
-    // Example usage - you can modify these arrays based on your image organization
-    // For now, I'll create a simple example with numbered files
-    // You can replace this with your actual image filenames
-    
     // Generate image filenames with exclusions
     const generateImageList = (start, count, exclude = []) => {
       const images = [];
@@ -410,7 +435,6 @@
     };
     
     // Populate sections with images
-    // Modify these arrays with your actual image filenames
     populateSection('section-travel', generateImageList(1, 13, [13, 23, 25]));
     populateSection('section-morning-walk', generateImageList(14, 13, [20, 33, 35]));
     populateSection('section-mound-dinner', generateImageList(27, 10));
@@ -423,3 +447,5 @@
   </script>
 </body>
 </html>
+
+
