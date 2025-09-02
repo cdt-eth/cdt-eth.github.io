@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html>
+<head>
+  <title>Aarhus - Christian's Site</title>
+  <style>    
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 0.1em;
+      margin-top: 0;
+    }
+    
+    .date {
+      font-style: italic;
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 2em;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 0.1em;
+      margin-top: 0;
+    }
+    
+    .image-container img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      height: 250px;
+      border-radius: 4px;
+    }
+
+    
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 2em 0;
+    }
+  
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.5em;
+      }
+      
+      h2 {
+        font-size: 1.5em;
+      }
+      .image-grid { 
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+      }
+      
+      .image-container img {
+        height: 150px;
+      }
+    }
+    
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+
+     dialog {
+      border: none;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.9);
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+    
+    dialog::backdrop {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+    }
+    
+    .modal-image {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+    
+    
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      outline: none;
+    }
+    
+        .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-nav:hover,
+    .modal-nav:focus {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    
+    .modal-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    .modal-prev {
+      left: 20px;
+    }
+    
+    .modal-next {
+      right: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .modal-prev {
+        left: 10px;
+      }
+      
+      .modal-next {
+        right: 10px;
+      }
+    }
+  
+  </style>
+</head>
+
+<body>
+
+
+  <h1>Aarhus</h1>
+  
+  <div class="date">
+    August 26-30, 2025
+  </div>
+
+  <!-- Section 1: Travel & First Night -->
+  <h2>Travel Day</h2>
+  <div class="subtitle">
+   Train from Copenhagen to Aarhus, dinner at Yi East, and a walk around the city.
+  </div>
+  <div class="image-grid" id="section-travel">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 2: Morning Walk -->
+  <h2>Aarhus Morning Walk</h2>
+  <div class="subtitle">
+    Solo exploring the city at 6am.
+  </div>
+  <div class="image-grid" id="section-morning-walk">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 3: Dinner at Mound -->
+  <h2>Dinner at Mundo</h2>
+  <div class="subtitle">
+    First team dinner was a 14 course Spanish tasting menu. 3 hours of non-stop eating.
+  </div>
+  <div class="image-grid" id="section-mound-dinner">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 4: ARoS Museum -->
+  <h2>ARoS Museum</h2>
+  <div class="subtitle">
+    Visiting the famous art museum's colorful roof top.
+  </div>
+  <div class="image-grid" id="section-aros">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 5: Dinner with Jonathan -->
+  <h2>Dinner at Keyser Social</h2>
+  <div class="subtitle">
+    Jonathan arrived. 13 course dinner. Gerd monitoring Reactor.
+  </div>
+  <div class="image-grid" id="section-jonathan-dinner">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 6: Chainalysis Office -->
+  <h2>Chainalysis Aarhus Office</h2>
+  <div class="subtitle">
+    Final day of meetings, demos, planning and goodbyes.
+  </div>
+  <div class="image-grid" id="section-chainalysis">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 7: Copenhagen -->
+  <h2>Copenhagen for the Night</h2>
+  <div class="subtitle">
+    Night before flying out we search for burgers.
+  </div>
+  <div class="image-grid" id="section-copenhagen">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 8: Rosenborg Castle -->
+  <h2>Copenhagen Morning Walk</h2>
+  <div class="subtitle">
+    Final morning walk to see Rosenborg Castle and its gardens.
+  </div>
+  <div class="image-grid" id="section-rosenborg">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Section 9: Noma -->
+  <h2>Noma</h2>
+  <div class="subtitle">
+    Had to see "the greatest restaurant in the world" with my own eyes.
+  </div>
+  <div class="image-grid" id="section-noma">
+    <!-- Images will be populated here -->
+  </div>
+
+  <!-- Image Modal Dialog -->
+  <dialog id="imageModal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-nav modal-prev" onclick="previousImage()">‹</button>
+    <button class="modal-nav modal-next" onclick="nextImage()">›</button>
+    <img id="modalImage" class="modal-image" src="" alt="">
+  </dialog>
+
+  <script>
+    // Base URL for your DigitalOcean Spaces
+    const baseUrl = 'https://cdtphotos.atl1.cdn.digitaloceanspaces.com/aarhus';
+    
+    // Global variables for carousel
+    let allImages = [];
+    let currentImageIndex = 0;
+    
+    // Function to create an image element
+    function createImageElement(filename) {
+      const container = document.createElement('div');
+      container.className = 'image-container';
+      
+      const img = document.createElement('img');
+      img.src = `${baseUrl}/${filename}`;
+      img.alt = filename.replace(/\.[^/.]+$/, ''); // Remove file extension for alt text
+      img.loading = 'lazy'; // Lazy loading for better performance
+      
+      // Add click handler to open modal
+      container.addEventListener('click', () => openModal(img.src, img.alt, allImages.indexOf(filename)));
+      
+      container.appendChild(img);
+      return container;
+    }
+    
+    // Modal functions
+    function openModal(imageSrc, imageAlt, imageIndex) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      currentImageIndex = imageIndex;
+      modalImg.src = imageSrc;
+      modalImg.alt = imageAlt;
+      modal.showModal();
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.close();
+    }
+    
+    function previousImage() {
+      if (currentImageIndex > 0) {
+        currentImageIndex--;
+        const modalImg = document.getElementById('modalImage');
+        const filename = allImages[currentImageIndex];
+        modalImg.src = `${baseUrl}/${filename}`;
+        modalImg.alt = filename.replace(/\.[^/.]+$/, '');
+      }
+    }
+    
+    function nextImage() {
+      if (currentImageIndex < allImages.length - 1) {
+        currentImageIndex++;
+        const modalImg = document.getElementById('modalImage');
+        const filename = allImages[currentImageIndex];
+        modalImg.src = `${baseUrl}/${filename}`;
+        modalImg.alt = filename.replace(/\.[^/.]+$/, '');
+      }
+    }
+    
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeModal();
+      }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowLeft') {
+        previousImage();
+      } else if (e.key === 'ArrowRight') {
+        nextImage();
+      }
+    });
+    
+    // Function to populate a section with images
+    function populateSection(sectionId, imageFiles) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      
+      imageFiles.forEach(filename => {
+        const imageElement = createImageElement(filename);
+        section.appendChild(imageElement);
+        allImages.push(filename); // Add to global array for carousel
+      });
+    }
+    
+    // Example usage - you can modify these arrays based on your image organization
+    // For now, I'll create a simple example with numbered files
+    // You can replace this with your actual image filenames
+    
+    // Generate image filenames with exclusions
+    const generateImageList = (start, count, exclude = []) => {
+      const images = [];
+      for (let i = start; i < start + count; i++) {
+        if (!exclude.includes(i)) {
+          images.push(`aarhus-${String(i).padStart(3, '0')}.jpg`);
+        }
+      }
+      return images;
+    };
+    
+    // Populate sections with images
+    // Modify these arrays with your actual image filenames
+    populateSection('section-travel', generateImageList(1, 13, [13, 23, 25]));
+    populateSection('section-morning-walk', generateImageList(14, 13, [20, 33, 35]));
+    populateSection('section-mound-dinner', generateImageList(27, 10));
+    populateSection('section-aros', generateImageList(40, 21, [48, 49, 50, 53, 60]));
+    populateSection('section-jonathan-dinner', generateImageList(61, 28, [71,79]));
+    populateSection('section-chainalysis', generateImageList(89, 24, [94, 106, 107, 108, 109, 110, 111, 112]));
+    populateSection('section-copenhagen', generateImageList(113, 20, [118, 119, 128, 129, 130, 132]));
+    populateSection('section-rosenborg', generateImageList(133, 23, [133, 137, 138, 142, 147, 150, 153]));
+    populateSection('section-noma', generateImageList(156, 24,[156, 162,163,164,165,167,169,170]));
+  </script>
+</body>
+</html>
